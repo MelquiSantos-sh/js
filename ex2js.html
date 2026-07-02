@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <!-- Define a codificação da página -->
+    <meta charset="UTF-8">
+
+    <!-- Título exibido na aba do navegador -->
+    <title>Calculadora de Conceito</title>
+
+    <style>
+
+        /* Configuração geral da página */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #eeeeee;
+        }
+
+        /* Caixa principal */
+        .caixa {
+            background-color: white;
+            width: 400px;
+            margin: 30px auto;
+            padding: 20px;
+            border: 1px solid #cccccc;
+        }
+
+        /* Título */
+        h1 {
+            font-family: "Times New Roman", serif;
+            font-size: 26px;
+            color: #1a1a70;
+            margin-bottom: 20px;
+        }
+
+        /* Área onde ficam os campos das notas */
+        .notas {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Nome de cada campo */
+        .campo label {
+            display: block;
+            color: #444444;
+            margin-bottom: 5px;
+        }
+
+        /* Caixa de entrada das notas */
+        .campo input {
+            width: 60px;
+            font-size: 16px;
+            padding: 3px;
+        }
+
+        /* Área dos resultados */
+        .resultado {
+            display: grid;
+            grid-template-columns: 100px auto;
+            row-gap: 8px;
+            font-size: 18px;
+        }
+
+        /* Cor dos títulos */
+        .resultado span:first-child {
+            color: #444444;
+        }
+
+        /* Destaque para o conceito */
+        #conceito {
+            font-weight: bold;
+            color: #1a1a70;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Caixa principal -->
+    <div class="caixa">
+
+        <!-- Título -->
+        <h1>Calculadora de Conceito</h1>
+
+        <!-- Campos das notas -->
+        <div class="notas">
+
+            <!-- Nota 1 -->
+            <div class="campo">
+                <label for="nota1">Nota 1</label>
+
+                <input
+                    type="number"
+                    id="nota1"
+                    min="0"
+                    max="10"
+                    value="10"
+                    oninput="calcular()">
+            </div>
+
+            <!-- Nota 2 -->
+            <div class="campo">
+                <label for="nota2">Nota 2</label>
+
+                <input
+                    type="number"
+                    id="nota2"
+                    min="0"
+                    max="10"
+                    value="10"
+                    oninput="calcular()">
+            </div>
+
+            <!-- Nota 3 -->
+            <div class="campo">
+                <label for="nota3">Nota 3</label>
+
+                <input
+                    type="number"
+                    id="nota3"
+                    min="0"
+                    max="10"
+                    value="6"
+                    oninput="calcular()">
+            </div>
+
+        </div>
+
+        <!-- Resultado -->
+        <div class="resultado">
+
+            <span>Conceito</span>
+            <span id="conceito">B</span>
+
+            <span>Média</span>
+            <span id="media">8.67</span>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /*
+            Função responsável por calcular
+            a média e o conceito.
+        */
+        function calcular() {
+
+            /*
+                Lê as três notas.
+
+                Caso o usuário deixe o campo vazio,
+                utiliza 0 para evitar NaN.
+            */
+
+            var nota1 = Number(document.getElementById("nota1").value) || 0;
+            var nota2 = Number(document.getElementById("nota2").value) || 0;
+            var nota3 = Number(document.getElementById("nota3").value) || 0;
+
+            /*
+                Garante que as notas fiquem
+                entre 0 e 10.
+            */
+
+            if (nota1 < 0) nota1 = 0;
+            if (nota1 > 10) nota1 = 10;
+
+            if (nota2 < 0) nota2 = 0;
+            if (nota2 > 10) nota2 = 10;
+
+            if (nota3 < 0) nota3 = 0;
+            if (nota3 > 10) nota3 = 10;
+
+            /*
+                Calcula a média aritmética.
+            */
+
+            var media = (nota1 + nota2 + nota3) / 3;
+
+            /*
+                Variável que armazenará
+                o conceito.
+            */
+
+            var conceito = "";
+
+            /*
+                Define o conceito
+                conforme a média.
+            */
+
+            if (media >= 9) {
+
+                conceito = "A";
+
+            }
+
+            else if (media >= 7) {
+
+                conceito = "B";
+
+            }
+
+            else if (media >= 5) {
+
+                conceito = "C";
+
+            }
+
+            else {
+
+                conceito = "D";
+
+            }
+
+            /*
+                Atualiza os resultados
+                na tela.
+            */
+
+            document.getElementById("media").innerHTML =
+                media.toFixed(2);
+
+            document.getElementById("conceito").innerHTML =
+                conceito;
+
+        }
+
+        /*
+            Executa o cálculo quando
+            a página é aberta.
+        */
+
+        calcular();
+
+    </script>
+
+</body>
+
+</html>
+  // calcula assim que a pagina carrega, com os valores padrao
+  calcular();
+</script>
+ 
+</body>
+</html>
+ 
