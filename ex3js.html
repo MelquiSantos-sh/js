@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <!-- Define a codificação da página -->
+    <meta charset="UTF-8">
+
+    <!-- Título exibido na aba -->
+    <title>Calculadora de Conceito</title>
+
+    <style>
+
+        /* Configuração geral da página */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #eeeeee;
+        }
+
+        /* Caixa principal */
+        .caixa {
+            background-color: white;
+            width: 420px;
+            margin: 30px auto;
+            padding: 20px;
+            border: 1px solid #cccccc;
+        }
+
+        /* Tabela de conceitos */
+        .tabela {
+            font-family: "Courier New", monospace;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* Cada linha da tabela */
+        .linhaTabela {
+            padding: 2px 4px;
+        }
+
+        /* Linha destacada */
+        .linhaTabela.ativo {
+            background-color: yellow;
+        }
+
+        /* Título */
+        h1 {
+            font-family: "Times New Roman", serif;
+            font-size: 26px;
+            color: #1a1a70;
+            margin-bottom: 20px;
+        }
+
+        /* Área das notas */
+        .notas {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Nome dos campos */
+        .campo label {
+            display: block;
+            color: #444444;
+            margin-bottom: 5px;
+        }
+
+        /* Campos de entrada */
+        .campo input {
+            width: 60px;
+            font-size: 16px;
+            padding: 3px;
+        }
+
+        /* Resultado */
+        .resultado {
+            display: grid;
+            grid-template-columns: 100px auto;
+            row-gap: 8px;
+            font-size: 18px;
+        }
+
+        .resultado span:first-child {
+            color: #444444;
+        }
+
+        /* Cor do conceito */
+        #conceito {
+            font-weight: bold;
+            color: #1a1a70;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="caixa">
+
+        <!-- Tabela de conceitos -->
+        <div class="tabela">
+
+            <div>Intervalo de valores e conceito</div>
+
+            <div class="linhaTabela" id="linhaA">
+                A&nbsp;&nbsp;&nbsp;9.0 - 10
+            </div>
+
+            <div class="linhaTabela" id="linhaB">
+                B&nbsp;&nbsp;&nbsp;7.5 - 8.9
+            </div>
+
+            <div class="linhaTabela" id="linhaC">
+                C&nbsp;&nbsp;&nbsp;6.0 - 7.4
+            </div>
+
+            <div class="linhaTabela" id="linhaD">
+                D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 - 5.9
+            </div>
+
+        </div>
+
+        <!-- Título -->
+        <h1>Calculadora de conceito</h1>
+
+        <!-- Campos das notas -->
+        <div class="notas">
+
+            <div class="campo">
+                <label for="nota1">Nota 1</label>
+
+                <input
+                    type="number"
+                    id="nota1"
+                    min="0"
+                    max="10"
+                    value="10"
+                    oninput="calcular()">
+            </div>
+
+            <div class="campo">
+                <label for="nota2">Nota 2</label>
+
+                <input
+                    type="number"
+                    id="nota2"
+                    min="0"
+                    max="10"
+                    value="10"
+                    oninput="calcular()">
+            </div>
+
+            <div class="campo">
+                <label for="nota3">Nota 3</label>
+
+                <input
+                    type="number"
+                    id="nota3"
+                    min="0"
+                    max="10"
+                    value=""
+                    oninput="calcular()">
+            </div>
+
+        </div>
+
+        <!-- Resultado -->
+        <div class="resultado">
+
+            <span>Conceito</span>
+            <span id="conceito"></span>
+
+            <span>Média</span>
+            <span id="media"></span>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /*
+            Calcula a média das três notas
+            e determina o conceito.
+        */
+
+        function calcular() {
+
+            /*
+                Lê as notas.
+
+                Caso algum campo esteja vazio,
+                assume valor zero.
+            */
+
+            var nota1 = Number(document.getElementById("nota1").value) || 0;
+            var nota2 = Number(document.getElementById("nota2").value) || 0;
+            var nota3 = Number(document.getElementById("nota3").value) || 0;
+
+            /*
+                Limita as notas entre
+                0 e 10.
+            */
+
+            nota1 = Math.min(Math.max(nota1, 0), 10);
+            nota2 = Math.min(Math.max(nota2, 0), 10);
+            nota3 = Math.min(Math.max(nota3, 0), 10);
+
+            /*
+                Calcula a média.
+            */
+
+            var media = (nota1 + nota2 + nota3) / 3;
+
+            /*
+                Descobre o conceito.
+            */
+
+            var conceito;
+
+            if (media >= 9) {
+
+                conceito = "A";
+
+            }
+
+            else if (media >= 7.5) {
+
+                conceito = "B";
+
+            }
+
+            else if (media >= 6) {
+
+                conceito = "C";
+
+            }
+
+            else {
+
+                conceito = "D";
+
+            }
+
+            /*
+                Mostra os resultados.
+            */
+
+            document.getElementById("media").innerHTML =
+                media.toFixed(2);
+
+            document.getElementById("conceito").innerHTML =
+                conceito;
+
+            /*
+                Destaca a linha correta.
+            */
+
+            destacarLinha(conceito);
+
+        }
+
+        /*
+            Remove o destaque de todas
+            as linhas e destaca somente
+            a linha do conceito atual.
+        */
+
+        function destacarLinha(conceito) {
+
+            document.getElementById("linhaA").classList.remove("ativo");
+            document.getElementById("linhaB").classList.remove("ativo");
+            document.getElementById("linhaC").classList.remove("ativo");
+            document.getElementById("linhaD").classList.remove("ativo");
+
+            document.getElementById("linha" + conceito)
+                    .classList.add("ativo");
+
+        }
+
+        /*
+            Executa quando a página abre.
+        */
+
+        calcular();
+
+    </script>
+
+</body>
+
+</html>
