@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <!-- Define a codificação de caracteres -->
+    <meta charset="UTF-8">
+
+    <!-- Título exibido na aba do navegador -->
+    <title>Visualizador de Imagens</title>
+
+    <style>
+        /* Configuração geral da página */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #eeeeee;
+        }
+
+        /* Caixa principal */
+        .caixa {
+            background-color: white;
+            width: 500px;
+            margin: 30px auto;
+            padding: 15px;
+            border: 1px solid #cccccc;
+        }
+
+        /* Título da página */
+        h1 {
+            font-family: "Times New Roman", serif;
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        /* Área dos botões */
+        .botoes {
+            margin-bottom: 15px;
+        }
+
+        /* Estilo dos botões */
+        .botoes button {
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        /* Caixa da imagem */
+        .quadro {
+            border: 1px solid #999999;
+            padding: 10px;
+        }
+
+        /* Cabeçalho da imagem */
+        .cabecalho {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        /* Link para abrir a imagem */
+        .cabecalho a {
+            text-decoration: none;
+            color: blue;
+        }
+
+        /* Configuração da imagem */
+        img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+            border-radius: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Caixa principal -->
+    <div class="caixa">
+
+        <!-- Título -->
+        <h1>Dogs</h1>
+
+        <!-- Botões -->
+        <div class="botoes">
+
+            <!-- Botão voltar -->
+            <button onclick="imagemAnterior()">&#8592;</button>
+
+            <!-- Botão avançar -->
+            <button onclick="proximaImagem()">&#8594;</button>
+
+            <!-- Checkbox (não possui função no momento) -->
+            <input type="checkbox" id="checkExtra">
+
+        </div>
+
+        <!-- Quadro onde aparece a imagem -->
+        <div class="quadro">
+
+            <div class="cabecalho">
+
+                <!-- Contador -->
+                <span id="contador"></span>
+
+                <!-- Nome da raça -->
+                <strong id="tituloImagem"></strong>
+
+                <!-- Link para abrir a imagem -->
+                <a id="linkImagem" href="#" target="_blank">
+                    &#8599;
+                </a>
+
+            </div>
+
+            <!-- Imagem -->
+            <img id="fotoAtual" src="" alt="Foto do cachorro">
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /*
+            Vetor contendo as imagens.
+
+            Cada posição possui:
+            titulo = nome da raça
+            url = endereço da imagem
+        */
+
+        var imagens = [
+
+            {
+                titulo: "Labrador",
+                url: "https://images.dog.ceo/breeds/labrador/n02099712_5643.jpg"
+            },
+
+            {
+                titulo: "Bulldog Francês",
+                url: "https://images.dog.ceo/breeds/bulldog-french/n02108915_5306.jpg"
+            },
+
+            {
+                titulo: "Beagle",
+                url: "https://images.dog.ceo/breeds/beagle/n02088364_11136.jpg"
+            },
+
+            {
+                titulo: "Husky Siberiano",
+                url: "https://images.dog.ceo/breeds/husky/n02110185_1469.jpg"
+            }
+
+        ];
+
+        /*
+            Variável que guarda a posição da imagem atual.
+        */
+        var indiceAtual = 0;
+
+        /*
+            Função responsável por atualizar a tela.
+        */
+        function mostrarImagem() {
+
+            // Captura os elementos do HTML
+            var foto = document.getElementById("fotoAtual");
+            var titulo = document.getElementById("tituloImagem");
+            var contador = document.getElementById("contador");
+            var link = document.getElementById("linkImagem");
+
+            // Atualiza a imagem
+            foto.src = imagens[indiceAtual].url;
+
+            // Atualiza o título
+            titulo.innerHTML = imagens[indiceAtual].titulo;
+
+            // Atualiza o contador
+            contador.innerHTML =
+                "#" + (indiceAtual + 1) + "/" + imagens.length + " ";
+
+            // Atualiza o link
+            link.href = imagens[indiceAtual].url;
+
+        }
+
+        /*
+            Vai para a próxima imagem.
+        */
+        function proximaImagem() {
+
+            // Ainda existem imagens?
+            if (indiceAtual < imagens.length - 1) {
+
+                indiceAtual++;
+
+            } else {
+
+                // Volta para a primeira
+                indiceAtual = 0;
+
+            }
+
+            mostrarImagem();
+
+        }
+
+        /*
+            Volta para a imagem anterior.
+        */
+        function imagemAnterior() {
+
+            // Existe imagem antes?
+            if (indiceAtual > 0) {
+
+                indiceAtual--;
+
+            } else {
+
+                // Vai para a última imagem
+                indiceAtual = imagens.length - 1;
+
+            }
+
+            mostrarImagem();
+
+        }
+
+        /*
+            Exibe a primeira imagem quando a página abre.
+        */
+        mostrarImagem();
+
+    </script>
+
+</body>
+
+</html>
